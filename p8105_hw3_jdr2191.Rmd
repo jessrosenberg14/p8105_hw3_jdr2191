@@ -23,9 +23,24 @@ There are `r count(instacart)` observations and `r ncol(instacart)` variables in
 
 ```{r aisles}
 aisles = 
-  instacart %>%
-  group_by(aisle_id, aisle) %>%
-  summarize(item_sum = sum(product_id)) %>%
-  arrange(desc(item_sum))
+  instacart %>% 
+    group_by(aisle_id, aisle) %>% 
+    summarize(sum_products_ordered = n()) %>% 
+    arrange(desc(sum_products_ordered))
+
+view(aisles)
 ```
 There are `r nrow(aisles)` aisles. The top four aisles for the most items ordered from are `r head(pull(aisles, aisle), 4)`.
+
+### Make a plot that shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered. Arrange aisles sensibly, and organize your plot so others can read it.
+
+```{r aisles_plot}
+aislesplot = 
+    instacart %>%
+    group_by(aisle_id, aisle) %>%
+    summarize(sum_products_ordered = n()) %>%
+    filter(sum_products_ordered > 10000)
+
+view(aislesplot)
+```
+
