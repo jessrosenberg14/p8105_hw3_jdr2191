@@ -1,6 +1,18 @@
 ---
 title: "p8105_hw3_jdr2191"
-output: html_document
+author: "Jess Rosenberg"
+due date: "14OCT2021"
+output: github_document
 ---
 
+```{r load libraries and dataset}
+library(tidyverse)
+library(p8105.datasets)
+data("instacart")
+```
 
+```{r}
+
+```
+
+There are `r count(instacart)` observations and `r ncol(instacart)` variables in the instacart dataset.
