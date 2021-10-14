@@ -40,7 +40,6 @@ aislesplot =
     group_by(aisle_id, aisle) %>%
     summarize(sum_products_ordered = n()) %>%
     filter(sum_products_ordered > 10000)
-
 view(aislesplot)
 ```
 
