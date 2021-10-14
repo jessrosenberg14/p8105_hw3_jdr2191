@@ -22,9 +22,10 @@ There are `r count(instacart)` observations and `r ncol(instacart)` variables in
 ### How many aisles are there, and which aisles are the most items ordered from?
 
 ```{r aisles}
-instacart %>%
+aisles = 
+  instacart %>%
   group_by(aisle_id, aisle) %>%
   summarize(item_sum = sum(product_id)) %>%
   arrange(desc(item_sum))
 ```
-There are 124 aisles. The top four aisles for the most items ordered from are fresh fruits, fresh vegetables, packaged vegetables fruits, and yogurt.
+There are `r nrow(aisles)` aisles. The top four aisles for the most items ordered from are `r head(pull(aisles, aisle), 4)`.
