@@ -40,6 +40,11 @@ aislesplot =
     group_by(aisle_id, aisle) %>%
     summarize(sum_products_ordered = n()) %>%
     filter(sum_products_ordered > 10000)
-view(aislesplot)
+
+aislesplot %>%
+  ggplot(aes(x = reorder(aisle, -sum_products_ordered), y = sum_products_ordered)) + geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90,hjust = 1,vjust = 0.5))
+                                                           
+
 ```
 
