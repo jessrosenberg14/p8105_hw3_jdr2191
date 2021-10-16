@@ -77,10 +77,10 @@ appleicecream =
   filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) %>%
   subset(select = c(day_of_week, order_hour_of_day, product_name)) %>%
   group_by(day_of_week, product_name) %>%
-  mutate(meanhour = mean(order_hour_of_day)) %>%
+  mutate(meanhour = round(mean(order_hour_of_day)), 0) %>%
   subset(select = -c(order_hour_of_day)) %>%
   distinct() %>%
-  arrange(desc(day_of_week)) %>%
+  arrange(day_of_week) %>%
   pivot_wider(product_name,
               names_from = "day_of_week",
               values_from = "meanhour"
