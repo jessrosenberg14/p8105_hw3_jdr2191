@@ -42,8 +42,11 @@ aislesplot =
     filter(sum_products_ordered > 10000)
 
 aislesplot %>%
-  ggplot(aes(x = reorder(aisle, -sum_products_ordered), y = sum_products_ordered)) + geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90,hjust = 1,vjust = 0.5))
+  ggplot(aes(x = reorder(aisle, -sum_products_ordered), y = sum_products_ordered)) + 
+  geom_bar(stat = "identity", fill = "#66ffc4") +
+  theme(axis.text.x = element_text(angle = 90,hjust = 1,vjust = 0.5)) +
+  ggtitle("The sum of items ordered in each aisle among aisles with more than 10,000 items ordered") +
+  xlab("Aisle Name") + ylab("Total number of products ordered")
                                                            
 
 ```
