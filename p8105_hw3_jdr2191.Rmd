@@ -11,6 +11,8 @@ library(p8105.datasets)
 data("instacart")
 ```
 
+# Problem 1
+
 ```{r}
 instacart %>%
   sample_n(500) %>%
@@ -19,7 +21,7 @@ instacart %>%
 
 There are `r count(instacart)` observations and `r ncol(instacart)` variables in the instacart dataset. Each row in the dataset represents an item ordered by a particular customer.
 
-### How many aisles are there, and which aisles are the most items ordered from?
+How many aisles are there, and which aisles are the most items ordered from?
 
 ```{r aisles}
 aisles = 
@@ -32,7 +34,7 @@ view(aisles)
 ```
 There are `r nrow(aisles)` aisles. The top four aisles for the most items ordered from are `r head(pull(aisles, aisle), 4)`.
 
-### Make a plot that shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered. Arrange aisles sensibly, and organize your plot so others can read it.
+Make a plot that shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered. Arrange aisles sensibly, and organize your plot so others can read it.
 
 ```{r aisles_plot}
 aislesplot = 
@@ -49,7 +51,7 @@ aislesplot %>%
   xlab("Aisle Name") + ylab("Total number of products ordered")
 ```
 
-### Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.
+Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.
 
 ```{r table_threemostpopular}
 topthree =
@@ -62,7 +64,5 @@ topthree =
   subset(select = -c(aisle_id))
 
 knitr::kable(topthree)
-
-  
 ```
 
