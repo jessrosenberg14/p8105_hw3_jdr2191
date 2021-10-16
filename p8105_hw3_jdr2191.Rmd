@@ -8,6 +8,7 @@ output: github_document
 ```{r load libraries and dataset}
 library(tidyverse)
 library(p8105.datasets)
+library(lubridate)
 data("instacart")
 ```
 
@@ -64,5 +65,28 @@ topthree =
   subset(select = -c(aisle_id))
 
 knitr::kable(topthree)
+```
+
+Make a table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week; format this table for human readers (i.e. produce a 2 x 7 table).
+
+```{r pinkladdy_coffeeicecream}
+appleicecream =
+  instacart %>%
+  mutate(order_dow2 = order_dow + 1) %>%
+  mutate(day_of_week = wday(order_dow2, label = TRUE)) %>%
+  filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) %>%
+  subset(select = c(day_of_week, order_hour_of_day, product_name)) %>%
+  group_by(day_of_week, product_name) %>%
+  mutate(meanhour = mean(order_hour_of_day)) %>%
+  subset(select = -c(order_hour_of_day)) %>%
+  distinct() %>%
+  arrange(desc(day_of_week)) %>%
+  pivot_wider(product_name,
+              names_from = "day_of_week",
+              values_from = "meanhour"
+  )
+  
+
+view(appleicecream)
 ```
 
