@@ -183,7 +183,8 @@ brfss20062010_df %>%
   geom_density(aes(fill = response), alpha = .5) + 
   facet_grid(rows = vars(year2), switch = "y") +
   theme_bw() + 
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom", axis.title.y = element_blank()) +
+  labs(x = "Data Value", fill = "Response")
   
 
 view(brfss20062010_df)
