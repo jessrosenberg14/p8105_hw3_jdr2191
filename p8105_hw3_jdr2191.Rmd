@@ -94,9 +94,15 @@ view(appleicecream)
 ```{r load and tidy BRFSS}
 data("brfss_smart2010")
 
-brfss_smart2010 %>%
-  janitor::clean_names()
+brfss_tidy = brfss_smart2010 %>%
+  janitor::clean_names() %>%
+  filter(topic %in% "Overall Health") %>%
+  filter(question %in% "How is your general health?") %>%
+  mutate(response_factor = factor(response, ordered = TRUE, 
+                           levels = c("Poor", "Fair", "Good", "Very good", "Excellent")))
 
-view(brfss_smart2010)
+unique(pull(brfss_tidy, response))
+
+view(brfss_tidy)
 ```
 
