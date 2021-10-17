@@ -167,8 +167,6 @@ brfssexcellent_df2 %>%
   geom_line(aes(group = locationabbr, color = locationabbr)) +
   geom_point(aes(group = locationabbr, color = locationabbr), size = .4) +
   labs(x = "Year", y = "Mean data value", col = "State")
-
-view(brfss_excellent)
 ```
 
 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
@@ -184,9 +182,21 @@ brfss20062010_df %>%
   facet_grid(rows = vars(year2), switch = "y") +
   theme_bw() + 
   theme(legend.position = "bottom", axis.title.y = element_blank()) +
-  labs(x = "Data Value", fill = "Response")
+  labs(x = "Data Value", fill = "Response") 
   
-
 view(brfss20062010_df)
+```
+
+# Problem 3
+
+```{r load and tidy dataset}
+accel = read_csv("accel_data.csv") %>%
+        janitor::clean_names() %>%
+        mutate(weekday = ifelse(day %in% 
+                         c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), 1, 0)) %>%
+        mutate(weekend = ifelse(day %in%
+                         c("Saturday", "Sunday"), 1, 0))
+
+view(accel)  
 ```
 
