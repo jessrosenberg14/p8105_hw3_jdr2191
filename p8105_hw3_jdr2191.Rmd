@@ -14,7 +14,7 @@ data("instacart")
 
 # Problem 1
 
-```{r}
+```{r exploratory analyses}
 instacart %>%
   sample_n(500) %>%
   ggplot(aes(x = order_hour_of_day, y = order_dow)) + geom_point()
@@ -91,7 +91,12 @@ view(appleicecream)
 
 # Problem 2
 
-```{r load_BRFSS}
+```{r load and tidy BRFSS}
 data("brfss_smart2010")
+
+brfss_smart2010 %>%
+  janitor::clean_names()
+
+view(brfss_smart2010)
 ```
 
