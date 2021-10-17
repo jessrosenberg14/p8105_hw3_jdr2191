@@ -9,12 +9,22 @@ output: github_document
 library(tidyverse)
 library(p8105.datasets)
 library(lubridate)
-data("instacart")
+library(viridis)
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d 
+scale_fill_discrete = scale_fill_viridis_d
 ```
 
 # Problem 1
 
 ```{r exploratory analyses}
+data("instacart")
+
 instacart %>%
   sample_n(500) %>%
   ggplot(aes(x = order_hour_of_day, y = order_dow)) + geom_point()
@@ -158,10 +168,24 @@ brfssexcellent_df2 %>%
   geom_point(aes(group = locationabbr, color = locationabbr), size = .4) +
   labs(x = "Year", y = "Mean data value", col = "State")
 
-
 view(brfss_excellent)
 ```
 
-
 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
+```{r 2006 and 2010 plots}
+brfss20062010_df = brfss_tidy %>%
+  filter(year %in% c(2006, 2010)) %>%
+  filter(locationabbr == "NY")
+
+brfss20062010_df %>%
+  mutate(year2 = factor(year, levels = c("2006", "2010"))) %>%
+  ggplot(aes(x = data_value, fill = response_factor)) + 
+  geom_density(aes(fill = response), alpha = .5) + 
+  facet_grid(rows = vars(year2), switch = "y") +
+  theme_bw() + 
+  theme(legend.position = "bottom")
+  
+
+view(brfss20062010_df)
+```
 
