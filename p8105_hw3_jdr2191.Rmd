@@ -135,4 +135,33 @@ In 2002, 6 states were observed at 7 or more locations. They are `r unique(pull(
 
 In 2010, 14 states were observed at 7 or more locations. They are `r unique(pull(brfss_2010locations, locationabbr))`.
 
-Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state (that is, make a plot showing a line for each state across years – the geom_line geometry and group aesthetic will help).
+Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state.
+```{r average value plot}
+brfssexcellent_df = brfss_tidy %>%
+  filter(response == "Excellent") %>%
+  subset(select = c(year, locationabbr, locationdesc, data_value)) %>%
+  unique() %>%
+  na.omit() %>%
+  subset(select = c(year, locationabbr, data_value)) %>%
+  group_by(locationabbr, year) %>%
+  mutate(meandatavalue = mean(data_value)) 
+
+brfssexcellent_df2 = brfssexcellent_df %>%
+  subset(select = c(year, locationabbr,meandatavalue)) %>%
+  unique()
+
+view(brfssexcellent_df2)
+
+brfssexcellent_df2 %>%
+  ggplot(aes(x = year, y = meandatavalue)) + 
+  geom_line(aes(group = locationabbr, color = locationabbr)) +
+  geom_point(aes(group = locationabbr, color = locationabbr), size = .4) +
+  labs(x = "Year", y = "Mean data value", col = "State")
+
+
+view(brfss_excellent)
+```
+
+
+Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
+
