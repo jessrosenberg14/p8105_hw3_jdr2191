@@ -85,8 +85,13 @@ appleicecream =
               names_from = "day_of_week",
               values_from = "meanhour"
   )
-  
 
 view(appleicecream)
+```
+
+# Problem 2
+
+```{r load_BRFSS}
+data("brfss_smart2010")
 ```
 
