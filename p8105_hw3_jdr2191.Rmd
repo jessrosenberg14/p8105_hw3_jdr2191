@@ -60,7 +60,7 @@ The plot "The sum of items ordered in each aisle among aisles with more than 10,
 
 The plot "Number of Aisles per Department" displays all 21 departments and the number of aisles per each department in descending order. This shows us that the top 3 departments with the most aisles are "personal care", "pantry" and "snacks". 
 
-There are `r count(instacart)` observations and `r ncol(instacart)` variables in the instacart dataset. Each row in the dataset represents an item ordered by a particular customer. Example products ordered include `r head(unique(pull(instacart, product_name)), 5)`. Products come from different aisles, such as `r head(unique(pull(instacart, aisle)), 5)` and different departments, including for example, `r head(unique(pull(instacart, department)), 5)`. 
+There are `r count(instacart)` observations and `r ncol(instacart)` variables in the instacart dataset. Each row in the dataset represents an item ordered by a particular customer. Example products ordered include `r head(unique(pull(instacart, product_name)), 5)`. Products come from different aisles, such as `r head(unique(pull(instacart, aisle)), 5)` and different departments, including for example, `r head(unique(pull(instacart, department)), 5)`. The dataset provides detailed information about the hour and day of the week that orders are placed and even tells us the order in which products were added to orders.  
 
 How many aisles are there, and which aisles are the most items ordered from?
 
@@ -127,7 +127,7 @@ appleicecream =
               values_from = "meanhour"
   )
 
-view(appleicecream)
+knitr::kable(appleicecream)
 ```
 
 # Problem 2
@@ -235,6 +235,9 @@ accel = read_csv("accel_data.csv") %>%
 
 view(accel)  
 ```
+There are `r count(accel)` observations and `r ncol(accel)` variables in the tidied accelerometer dataset. The dataset includes data over 35 days (5 weeks). The dataset also indicates the day of the week that the measurements come from. There are 1,440 "minute" variables that include the accelerometer data by minute over a 24 hour period. Lastly, there is a newly added variable day_class that indicates if the day of the week is a weekday or a weekend. 
+
+
 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate accross minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?
 ```{r}
 accelagg = accel %>%
