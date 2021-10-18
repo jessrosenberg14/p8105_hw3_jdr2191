@@ -10,14 +10,6 @@ library(tidyverse)
 library(p8105.datasets)
 library(lubridate)
 library(viridis)
-
-options(
-  ggplot2.continuous.colour = "viridis",
-  ggplot2.continuous.fill = "viridis"
-)
-
-scale_colour_discrete = scale_colour_viridis_d 
-scale_fill_discrete = scale_fill_viridis_d
 ```
 
 # Problem 1
@@ -197,6 +189,7 @@ brfssexcellent_df2 %>%
   ggplot(aes(x = year, y = meandatavalue)) + 
   geom_line(aes(group = locationabbr, color = locationabbr)) +
   geom_point(aes(group = locationabbr, color = locationabbr), size = .4) +
+  scale_fill_brewer() +
   labs(x = "Year", y = "Mean data value", col = "State")
 ```
 
@@ -213,7 +206,8 @@ brfss20062010_df %>%
   facet_grid(rows = vars(year2), switch = "y") +
   theme_bw() + 
   theme(legend.position = "bottom", axis.title.y = element_blank()) +
-  labs(x = "Data Value", fill = "Response") 
+  labs(x = "Data Value", fill = "Response") +
+  scale_fill_viridis_d(option = "A")
   
 view(brfss20062010_df)
 ```
