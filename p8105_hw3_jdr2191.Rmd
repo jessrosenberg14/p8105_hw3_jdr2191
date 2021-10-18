@@ -218,9 +218,20 @@ view(accelagg)
 Accelerometer data allows the inspection activity over the course of the day. Make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. Describe in words any patterns or conclusions you can make based on this graph.
 
 ```{r accelermoeter plot}
-view(accelagg)
-accelagg %>%
-  ggplot(aes(x = day_id, y = daysum, group = day)) + 
-  geom_boxplot(aes(color = day))
+accelplot = accel %>%
+  pivot_longer(
+    cols = starts_with("minute"),
+    names_to = "minute",
+    names_prefix = "minute_",
+    values_to = "activity",
+    values_drop_na = TRUE
+  )
+
+view(accelplot)
+
+accelplot %>%
+  ggplot(aes(x = minute, y = activity, group = day)) + 
+  geom_line(aes(group = day, color = day)) +
+  geom_point(aes(group = day, color = day), size = .4, alpha = .5)
 ```
 
