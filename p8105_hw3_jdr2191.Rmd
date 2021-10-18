@@ -237,7 +237,6 @@ view(accel)
 ```
 There are `r count(accel)` observations and `r ncol(accel)` variables in the tidied accelerometer dataset. The dataset includes data over 35 days (5 weeks). The dataset also indicates the day of the week that the measurements come from. There are 1,440 "minute" variables that include the accelerometer data by minute over a 24 hour period. Lastly, there is a newly added variable day_class that indicates if the day of the week is a weekday or a weekend. 
 
-
 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate accross minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?
 ```{r}
 accelagg = accel %>%
@@ -247,7 +246,13 @@ accelagg = accel %>%
 
 knitr::kable(accelagg)
 view(accelagg)
+
+accelagg %>%
+  ggplot(aes(x = day_id, y = daysum, group = day), color = factor(day)) + 
+  geom_boxplot(aes(color = day)) +
+  labs(x = "Unique Day Identification", y = "Total activity per day", col = "Day of the week") 
 ```
+After I made the table, I plotted these data in a boxplots in order to better observe trends. Using the boxplots, we see that the patient is most active on Fridays. His activity is highly variable on Saturdays and not very variable on Wednesdays. 
 
 Accelerometer data allows the inspection activity over the course of the day. Make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. Describe in words any patterns or conclusions you can make based on this graph.
 
