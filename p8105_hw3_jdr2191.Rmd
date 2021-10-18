@@ -225,13 +225,15 @@ accelplot = accel %>%
     names_prefix = "minute_",
     values_to = "activity",
     values_drop_na = TRUE
-  )
+  ) %>%
+  mutate(minute = as.numeric(minute))
+
+typeof(pull(accelplot, minute))
 
 view(accelplot)
 
 accelplot %>%
   ggplot(aes(x = minute, y = activity, group = day)) + 
   geom_line(aes(group = day, color = day)) +
-  geom_point(aes(group = day, color = day), size = .4, alpha = .5)
-```
+  geom_point(aes(group = day, color = day)
 
