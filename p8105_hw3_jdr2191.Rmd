@@ -188,9 +188,8 @@ view(brfssexcellent_df2)
 
 brfssexcellent_df2 %>%
   ggplot(aes(x = year, y = meandatavalue)) + 
-  geom_line(aes(group = locationabbr, color = locationabbr)) +
-  geom_point(aes(group = locationabbr, color = locationabbr), size = .4) +
-  scale_fill_brewer() +
+  geom_line(aes(group = locationabbr, color = locationabbr), size = .9, alpha = .5) +
+  geom_point(aes(group = locationabbr, color = locationabbr), size = .4, alpha = .5) +
   labs(x = "Year", y = "Mean data value", col = "State")
 ```
 
