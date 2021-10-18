@@ -193,10 +193,12 @@ Load, tidy, and otherwise wrangle the data. Your final dataset should include al
 ```{r load and tidy dataset}
 accel = read_csv("accel_data.csv") %>%
         janitor::clean_names() %>%
-        mutate(weekday = ifelse(day %in% 
-                         c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), 1, 0)) %>%
-        mutate(weekend = ifelse(day %in%
-                         c("Saturday", "Sunday"), 1, 0)) %>%
+        mutate(day = factor(day, ordered = TRUE,
+                           levels = c("Monday", "Tuesday", "Wednesday", "Thursday", 
+                                      "Friday", "Saturday", "Sunday")),
+               week = factor(week, ordered = TRUE,levels = c(1:5)),
+               day_class = ifelse(day %in% c("Saturday", "Sunday"),"weekend", "weekday") %>%
+               factor(levels = c("weekday", "weekend"))) %>%
         rename_at(vars(matches("activity_")), ~str_remove(., "activity_")) %>%
         rename_with(.cols = "1":"1440", function(x){paste0("minute_", x)})
 
@@ -210,12 +212,15 @@ accelagg = accel %>%
   subset(select = c(day_id, day, daysum)) 
 
 knitr::kable(accelagg)
-
-
 view(accelagg)
 ```
 
-
-
 Accelerometer data allows the inspection activity over the course of the day. Make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. Describe in words any patterns or conclusions you can make based on this graph.
+
+```{r accelermoeter plot}
+view(accelagg)
+accelagg %>%
+  ggplot(aes(x = day_id, y = daysum, group = day)) + 
+  geom_boxplot(aes(color = day))
+```
 
