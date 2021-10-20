@@ -146,10 +146,10 @@ knitr::kable(appleicecream)
 # Problem 2
 
 Data Cleaning Steps:
-* Format the data to use appropriate variable names;
-* Focus on the “Overall Health” topic
-* Include only responses from “Excellent” to “Poor”
-* Organize responses as a factor taking levels ordered from “Poor” to “Excellent”
+*Format the data to use appropriate variable names;
+*Focus on the “Overall Health” topic
+*Include only responses from “Excellent” to “Poor”
+*Organize responses as a factor taking levels ordered from “Poor” to “Excellent”
 
 ```{r load_tidy_BRFSS}
 data("brfss_smart2010")
@@ -251,9 +251,16 @@ accel = read_csv("accel_data.csv") %>%
                day_class = ifelse(day %in% c("Saturday", "Sunday"),"weekend", "weekday") %>%
                factor(levels = c("weekday", "weekend"))) %>%
         rename_at(vars(matches("activity_")), ~str_remove(., "activity_")) %>%
-        rename_with(.cols = "1":"1440", function(x){paste0("minute_", x)})
-
-view(accel)  
+        rename_with(.cols = "1":"1440", function(x){paste0("minute_", x)}) %>%
+        pivot_longer(
+          cols = starts_with("minute"),
+          names_to = "minute",
+          names_prefix = "minute_",
+          values_to = "activity",
+          values_drop_na = TRUE
+        ) %>%
+        mutate(minute = as.numeric(minute)) %>%
+        mutate(rename(activity_count = activity))
 ```
 There are `r count(accel)` observations and `r ncol(accel)` variables in the tidied accelerometer dataset. The dataset includes data over 35 days (5 weeks). The dataset also indicates the day of the week that the measurements come from. There are 1,440 "minute" variables that include the accelerometer data by minute over a 24 hour period. Lastly, there is a newly added variable day_class that indicates if the day of the week is a weekday or a weekend. 
 
@@ -291,8 +298,6 @@ accelplot = accel %>%
     values_drop_na = TRUE
   ) %>%
   mutate(minute = as.numeric(minute))
-
-view(accelplot)
 
 accelplot %>%
   ggplot(aes(x = minute, y = activity, group = day)) + 
