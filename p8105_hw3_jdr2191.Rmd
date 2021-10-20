@@ -268,16 +268,16 @@ Traditional analyses of accelerometer data focus on the total activity over the 
 
 ```{r aggregate_accel_trends}
 accelagg = accel %>%
-  group_by(day_id) %>%
+  group_by(day_id, day) %>%
   summarize(agg_sum = sum(activity_count))
 
 knitr::kable(accelagg)
 view(accelagg)
 
 accelagg %>%
-  ggplot(aes(x = day_id, y = daysum, group = day), color = factor(day)) + 
+  ggplot(aes(x = day, y = agg_sum, group = day), color = factor(day)) + 
   geom_boxplot(aes(color = day)) +
-  labs(x = "Unique Day Identification", y = "Total activity per day", 
+  labs(x = "Day of the week", y = "Total activity per day", 
        col = "Day of the week") +
   ggtitle("Total activity by day of the week") +
   theme(plot.title = element_text(hjust = 0.5)) 
