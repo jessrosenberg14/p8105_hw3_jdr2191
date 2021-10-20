@@ -38,7 +38,7 @@ instacartreorders_df %>%
 
 instacartdepts_df = instacart %>%
   group_by(department_id, department) %>%
-  summarise(number_aisle = n_distinct(aisle)) %>%
+  summarise(number_aisle = n_distinct(aisle))
   
 instacartdepts_df %>%
   ggplot(aes(x = reorder(department, number_aisle), y = number_aisle)) + 
@@ -88,7 +88,7 @@ There are `r nrow(aisles)` aisles. The top four aisles for the most items ordere
 
 Make a plot that shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered. Arrange aisles sensibly, and organize your plot so others can read it.
 
-```{r aisles_plot}
+```{r aisles_plot, message=FALSE}
 aislesplot = 
     instacart %>%
     group_by(aisle_id, aisle) %>%
@@ -101,6 +101,7 @@ aislesplot %>%
   theme(axis.text.x = element_text(angle = 90,hjust = 1,vjust = 0.5)) +
   ggtitle("The sum of items ordered in each aisle among aisles 
           with more than 10,000 items ordered") +
+  theme(plot.title = element_text(hjust = 0.5)) +
   xlab("Aisle Name") + ylab("Total number of products ordered")
 ```
 
@@ -209,7 +210,9 @@ brfssexcellent_df2 %>%
   ggplot(aes(x = year, y = meandatavalue)) + 
   geom_line(aes(group = locationabbr, color = locationabbr), size = .9, alpha = .5) +
   geom_point(aes(group = locationabbr, color = locationabbr), size = .4, alpha = .5) +
-  labs(x = "Year", y = "Mean data value", col = "State")
+  labs(x = "Year", y = "Mean data value", col = "State") +
+  ggtitle("Among Excellent responses, the average data value by state") +
+  theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
@@ -226,7 +229,9 @@ brfss20062010_df %>%
   theme_bw() + 
   theme(legend.position = "bottom", axis.title.y = element_blank()) +
   labs(x = "Data Value", fill = "Response") +
-  scale_fill_viridis_d(option = "A")
+  scale_fill_viridis_d(option = "A") +
+  ggtitle("The distribution of data value for responses among locations in NY state") +
+  theme(plot.title = element_text(hjust = 0.5)) 
   
 view(brfss20062010_df)
 ```
@@ -265,13 +270,17 @@ accelagg %>%
   ggplot(aes(x = day_id, y = daysum, group = day), color = factor(day)) + 
   geom_boxplot(aes(color = day)) +
   labs(x = "Unique Day Identification", y = "Total activity per day", 
-       col = "Day of the week") 
+       col = "Day of the week") +
+  ggtitle("Total activity by day of the week") +
+  theme(plot.title = element_text(hjust = 0.5)) 
 ```
+
+
 After I made the table, I plotted these data in a boxplots in order to better observe trends. Using the boxplots, we see that the patient is most active on Fridays. His activity is highly variable on Saturdays and not very variable on Wednesdays. 
 
 Accelerometer data allows the inspection activity over the course of the day. Make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. Describe in words any patterns or conclusions you can make based on this graph.
 
-```{r accelermoeter plot}
+```{r accelermoeter_plot}
 accelplot = accel %>%
   pivot_longer(
     cols = starts_with("minute"),
@@ -288,7 +297,9 @@ accelplot %>%
   ggplot(aes(x = minute, y = activity, group = day)) + 
   geom_line(aes(group = day, color = day)) +
   geom_point(aes(group = day, color = day), size = .4, alpha = .5) +
-  labs(x = "Minute", y = "Total accelerometer activity", col = "Day of week")
+  labs(x = "Minute", y = "Total accelerometer activity", col = "Day of week") +
+  ggtitle("24-hour activity time courses per day and by day of the week") +
+  theme(plot.title = element_text(hjust = 0.5)) 
   
 ```
 
