@@ -211,7 +211,7 @@ brfssexcellent_df2 %>%
   geom_line(aes(group = locationabbr, color = locationabbr), size = .9, alpha = .5) +
   geom_point(aes(group = locationabbr, color = locationabbr), size = .4, alpha = .5) +
   labs(x = "Year", y = "Mean data value", col = "State") +
-  ggtitle("Among Excellent responses, the average data value by state") +
+  ggtitle("Among excellent responses, the average data value by state") +
   theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
