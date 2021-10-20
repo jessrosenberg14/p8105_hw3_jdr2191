@@ -58,13 +58,18 @@ instacartdow_df %>%
   summarize(ordersum = n_distinct(order_id)) %>%
   ggplot(aes(x = day_of_week, y = ordersum)) +
   geom_bar(stat = "identity", fill = "#2EB270") +
+  geom_text(aes(label = ordersum), position = position_dodge(width = 0.9), 
+            vjust = -0.25, size = 4) +
   labs(x = "Day of the Week", y = "Number of Orders Placed") +
-  ggtitle("Total number of orders placed by day of the week") 
+  ggtitle("Total number of orders placed by day of the week") +
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 The plot "The sum of items ordered in each aisle among aisles with more than 10,000 items ordered" shows us in a sample of 500 observations the density of items that have been ordered before vs. items that have not been ordered before, broken out by day of the week and hour of the day. We can see from this plot that patterns differ depending on the day of the week and that generally speaking, most items are ordered between the hours of 7am and 7pm.  
 
 The plot "Number of Aisles per Department" displays all 21 departments and the number of aisles per each department in descending order. This shows us that the top 3 departments with the most aisles are "personal care", "pantry" and "snacks". 
+
+The plot "Total number of orders placed by day of the week" displays the total number of orders placed by the day of the week. From this table, we see that the most orders are placed on Sundays, followed by Mondays and Saturdays. The fewest orders are placd on Wednesdays.
 
 There are `r count(instacart)` observations and `r ncol(instacart)` variables in the instacart dataset. Each row in the dataset represents an item ordered by a particular customer. Example products ordered include `r head(unique(pull(instacart, product_name)), 5)`. Products come from different aisles, such as `r head(unique(pull(instacart, aisle)), 5)` and different departments, including for example, `r head(unique(pull(instacart, department)), 5)`. The dataset provides detailed information about the hour and day of the week that orders are placed and even tells us the order in which products were added to orders.  
 
