@@ -260,16 +260,16 @@ accel = read_csv("accel_data.csv") %>%
           values_drop_na = TRUE
         ) %>%
         mutate(minute = as.numeric(minute)) %>%
-        mutate(rename(activity_count = activity))
+        rename(activity_count = activity)
 ```
-There are `r count(accel)` observations and `r ncol(accel)` variables in the tidied accelerometer dataset. The dataset includes data over 35 days (5 weeks). The dataset also indicates the day of the week that the measurements come from. There are 1,440 "minute" variables that include the accelerometer data by minute over a 24 hour period. Lastly, there is a newly added variable day_class that indicates if the day of the week is a weekday or a weekend. 
+There are `r count(accel)` observations and `r ncol(accel)` variables in the tidied accelerometer dataset. The dataset includes data over 35 days (5 weeks). The dataset also indicates the day of the week that the measurements come from and an activity count for every minute in a 24-hour period. Lastly, there is a newly added variable day_class that indicates if the day of the week is a weekday or a weekend. 
 
 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate accross minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?
+
 ```{r aggregate_accel_trends}
 accelagg = accel %>%
-  rowwise() %>% 
-  mutate(daysum = sum(c_across("minute_1":"minute_1440"), na.rm = T)) %>%
-  subset(select = c(day_id, day, daysum)) 
+  group_by(day_id) %>%
+  summarize(agg_sum = sum(activity_count))
 
 knitr::kable(accelagg)
 view(accelagg)
