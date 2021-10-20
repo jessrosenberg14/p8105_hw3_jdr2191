@@ -69,11 +69,11 @@ The plot "The sum of items ordered in each aisle among aisles with more than 10,
 
 The plot "Number of Aisles per Department" displays all 21 departments and the number of aisles per each department in descending order. This shows us that the top 3 departments with the most aisles are "personal care", "pantry" and "snacks". 
 
-The plot "Total number of orders placed by day of the week" displays the total number of orders placed by the day of the week. From this table, we see that the most orders are placed on Sundays, followed by Mondays and Saturdays. The fewest orders are placd on Wednesdays.
+The plot "Total number of orders placed by day of the week" displays the total number of orders placed by the day of the week. From this table, we see that the most orders are placed on Sundays, followed by Mondays and Saturdays. The fewest orders are placed on Wednesdays.
 
 There are `r count(instacart)` observations and `r ncol(instacart)` variables in the instacart dataset. Each row in the dataset represents an item ordered by a particular customer. Example products ordered include `r head(unique(pull(instacart, product_name)), 5)`. Products come from different aisles, such as `r head(unique(pull(instacart, aisle)), 5)` and different departments, including for example, `r head(unique(pull(instacart, department)), 5)`. The dataset provides detailed information about the hour and day of the week that orders are placed and even tells us the order in which products were added to orders.  
 
-How many aisles are there, and which aisles are the most items ordered from?
+### How many aisles are there, and which aisles are the most items ordered from?
 
 ```{r aisles, message=FALSE}
 aisles = 
@@ -96,9 +96,10 @@ aislesplot =
     filter(sum_products_ordered > 10000)
 
 aislesplot %>%
-  ggplot(aes(x = reorder(aisle, -sum_products_ordered), y = sum_products_ordered)) + 
+  ggplot(aes(x = reorder(aisle, sum_products_ordered), 
+             y = sum_products_ordered)) + 
+  coord_flip() +
   geom_bar(stat = "identity", fill = "#6699ff") +
-  theme(axis.text.x = element_text(angle = 90,hjust = 1,vjust = 0.5)) +
   ggtitle("The sum of items ordered in each aisle among aisles 
           with more than 10,000 items ordered") +
   theme(plot.title = element_text(hjust = 0.5)) +
