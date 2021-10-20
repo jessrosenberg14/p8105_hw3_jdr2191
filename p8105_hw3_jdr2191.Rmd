@@ -38,7 +38,7 @@ instacartreorders_df %>%
 
 instacartdepts_df = instacart %>%
   group_by(department_id, department) %>%
-  summarise(number_aisle = n_distinct(aisle))
+  summarise(number_aisle = n_distinct(aisle)) %>%
   
 instacartdepts_df %>%
   ggplot(aes(x = reorder(department, number_aisle), y = number_aisle)) + 
@@ -47,6 +47,19 @@ instacartdepts_df %>%
   labs(x = "Department Name", y = "Number of Aisles") +
   ggtitle("Number of Aisles per Department") +
   theme(plot.title = element_text(hjust = 0.5))
+
+instacartdow_df = instacart %>%
+  mutate(dow = factor(order_dow, ordered = TRUE, levels = c(0,1,2,3,4,5,6))) %>%
+  mutate(order_dow2 = order_dow + 1) %>%
+  mutate(day_of_week = wday(order_dow2, label = TRUE))
+
+instacartdow_df %>%
+  group_by(day_of_week) %>%
+  summarize(ordersum = n_distinct(order_id)) %>%
+  ggplot(aes(x = day_of_week, y = ordersum)) +
+  geom_bar(stat = "identity", fill = "#2EB270") +
+  labs(x = "Day of the Week", y = "Number of Orders Placed") +
+  ggtitle("Total number of orders placed by day of the week") 
 ```
 
 The plot "The sum of items ordered in each aisle among aisles with more than 10,000 items ordered" shows us in a sample of 500 observations the density of items that have been ordered before vs. items that have not been ordered before, broken out by day of the week and hour of the day. We can see from this plot that patterns differ depending on the day of the week and that generally speaking, most items are ordered between the hours of 7am and 7pm.  
