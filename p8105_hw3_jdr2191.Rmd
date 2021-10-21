@@ -142,6 +142,7 @@ appleicecream =
 
 knitr::kable(appleicecream)
 ```
+Pink lady apples are most often ordered in the late morning/early afternoon as the mean hour ordered is 12pm. Coffee ice cream is most often ordered in the early afternoon as the mean hour ordered is 2pm.
 
 # Problem 2
 
