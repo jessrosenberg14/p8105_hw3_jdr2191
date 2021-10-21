@@ -286,7 +286,8 @@ accelagg %>%
   labs(x = "Day of the week", y = "Total activity", 
        col = "Day of the week") +
   ggtitle("Total activity by day of the week") +
-  theme(plot.title = element_text(hjust = 0.5)) 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()
 ```
 
 *After I made the table, I plotted these data in a boxplots in order to better observe trends. Using the boxplots, we see that the patient is most active on Fridays. His activity is highly variable on Saturdays and least variable on Wednesdays.* 
@@ -300,7 +301,8 @@ accel %>%
   geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), size = 0.4, alpha = 0.5) +
   labs(x = "Minute", y = "Total accelerometer activity", col = "Day of week") +
   ggtitle("24-hour activity time courses per day and by day of the week") +
-  theme(plot.title = element_text(hjust = 0.5)) + theme_minimal()
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme_minimal()
 ```
 
 *The plot shows that the start of the day has low accelermoeter activity whereas the middle to the end of the day has higher accelermoeter activity. The majority of the minutes throughout the day have accelermoeter activity below 2,500. Using the geom_smooth lines, we see that the means for all of the days never reach above 1,250, with Friday reaching the highest mean peak around minute 1,250. Around minute 700, Sunday has many accelermoeter values above 2,500. In general, accelermoeter activity appears to peak around minute 1,200.*  
