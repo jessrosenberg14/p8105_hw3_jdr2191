@@ -108,7 +108,7 @@ aislesplot %>%
 
 **Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.**
 
-```{r table_threemostpopular}
+```{r table_threemostpopular, message=FALSE}
 topthree =
   instacart %>%
   filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>%
@@ -123,7 +123,7 @@ knitr::kable(topthree)
 
 **Make a table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week; format this table for human readers (i.e. produce a 2 x 7 table).**
 
-```{r pinkladdy_coffeeicecream}
+```{r pinkladdy_coffeeicecream, message=FALSE}
 appleicecream =
   instacart %>%
   mutate(order_dow2 = order_dow + 1) %>%
@@ -155,7 +155,7 @@ knitr::kable(appleicecream)
 
 * Organize responses as a factor taking levels ordered from “Poor” to “Excellent”
 
-```{r load_tidy_BRFSS}
+```{r load_tidy_BRFSS, message=FALSE}
 data("brfss_smart2010")
 
 brfss_tidy = brfss_smart2010 %>%
@@ -170,7 +170,7 @@ view(brfss_tidy)
 
 **In 2002, which states were observed at 7 or more locations? What about in 2010?**
 
-```{r states_2002_2010}
+```{r states_2002_2010, message=FALSE}
 brfss_2002locations = brfss_tidy %>%
   filter(year == 2002) %>% 
   subset(select = c(year,locationabbr, locationdesc)) %>%
@@ -197,7 +197,7 @@ In 2010, 14 states were observed at 7 or more locations. They are `r unique(pull
 
 **Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state.**
 
-```{r avg_value_plot}
+```{r avg_value_plot, message=FALSE}
 brfssexcellent_df = brfss_tidy %>%
   filter(response == "Excellent") %>%
   subset(select = c(year, locationabbr, locationdesc, data_value)) %>%
@@ -224,7 +224,7 @@ brfssexcellent_df2 %>%
 
 **Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.**
 
-```{r 2006_2010_plots}
+```{r 2006_2010_plots, message=FALSE}
 brfss20062010_df = brfss_tidy %>%
   filter(year %in% c(2006, 2010)) %>%
   filter(locationabbr == "NY")
@@ -273,7 +273,7 @@ There are `r count(accel)` observations and `r ncol(accel)` variables in the tid
 
 **Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate accross minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?**
 
-```{r aggregate_accel_trends}
+```{r aggregate_accel_trends, message=FALSE}
 accelagg = accel %>%
   group_by(day_id, day) %>%
   summarize(agg_sum = sum(activity_count))
@@ -295,7 +295,7 @@ After I made the table, I plotted these data in a boxplots in order to better ob
 
 **Accelerometer data allows the inspection activity over the course of the day. Make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week. Describe in words any patterns or conclusions you can make based on this graph.**
 
-```{r accelermoeter_plot}
+```{r accelermoeter_plot, message=FALSE}
 accel %>%
   ggplot(aes(x = minute, y = activity_count, group = day, color = day)) + 
   geom_point(size = .4, alpha = .5) +
