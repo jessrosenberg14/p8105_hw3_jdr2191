@@ -286,8 +286,7 @@ accelagg %>%
   labs(x = "Day of the week", y = "Total activity", 
        col = "Day of the week") +
   ggtitle("Total activity by day of the week") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme_minimal()
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 *After I made the table, I plotted these data in a boxplots in order to better observe trends. Using the boxplots, we see that the patient is most active on Fridays. His activity is highly variable on Saturdays and least variable on Wednesdays.* 
